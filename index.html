@@ -1,1 +1,226 @@
-Pagina Condominio Fuentes de Porvernir.
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Barra Lateral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            position: relative;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            margin: 2px 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            margin-right: 0;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background-color: #f5f5f5;
+            border-radius: 25px 0 0 25px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background-color: #f5f5f5;
+        }
+
+        .content-header {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .content-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Iconos SVG personalizados */
+        .dashboard-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z'/%3E%3C/svg%3E");
+        }
+
+        .batch-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-5H18V4.5C18 3.12 16.88 2 15.5 2h-7C7.12 2 6 3.12 6 4.5V6H4.5C3.12 6 2 7.12 2 8.5v11C2 20.88 3.12 22 4.5 22h15c1.38 0 2.5-1.12 2.5-2.5v-11C22 7.12 20.88 6 19.5 6zM8 4.5c0-.28.22-.5.5-.5h7c.28 0 .5.22.5.5V6H8V4.5z'/%3E%3C/svg%3E");
+        }
+
+        .students-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01.99l-2.74 3.64A1.5 1.5 0 0 0 12.5 14h1.64l.9-1.2 1.4 4.2H14v3h6z'/%3E%3Cpath d='M12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5z'/%3E%3C/svg%3E");
+        }
+
+        .employees-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
+        }
+
+        .tests-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/%3E%3C/svg%3E");
+        }
+
+        .settings-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z'/%3E%3C/svg%3E");
+        }
+
+        .nav-icon.dashboard { background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .nav-icon.batch { background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .nav-icon.students { background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .nav-icon.employees { background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .nav-icon.tests { background-size: contain; background-repeat: no-repeat; background-position: center; }
+        .nav-icon.settings { background-size: contain; background-repeat: no-repeat; background-position: center; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" class="nav-item active">
+            <div class="nav-icon dashboard"></div>
+            Dashboard
+        </a>
+        
+        <a href="#" class="nav-item">
+            <div class="nav-icon batch"></div>
+            Batch
+        </a>
+        
+        <a href="#" class="nav-item">
+            <div class="nav-icon students"></div>
+            Students
+        </a>
+        
+        <a href="#" class="nav-item">
+            <div class="nav-icon employees"></div>
+            Employees
+        </a>
+        
+        <a href="#" class="nav-item">
+            <div class="nav-icon tests"></div>
+            Tests
+        </a>
+        
+        <a href="#" class="nav-item">
+            <div class="nav-icon settings"></div>
+            Settings
+        </a>
+    </div>
+
+    <div class="main-content">
+        <h1 class="content-header">Dashboard</h1>
+        <p class="content-text">
+            Bienvenido al panel de control. Aquí puedes gestionar todos los aspectos de tu sistema educativo.
+        </p>
+        <br>
+        <p class="content-text">
+            Utiliza la barra lateral para navegar entre las diferentes secciones:
+            <br><br>
+            • <strong>Dashboard:</strong> Vista general del sistema<br>
+            • <strong>Batch:</strong> Gestión de lotes y grupos<br>
+            • <strong>Students:</strong> Administración de estudiantes<br>
+            • <strong>Employees:</strong> Gestión de empleados<br>
+            • <strong>Tests:</strong> Creación y gestión de exámenes<br>
+            • <strong>Settings:</strong> Configuración del sistema
+        </p>
+    </div>
+
+    <script>
+        // Agregar funcionalidad de navegación
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remover clase active de todos los items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                
+                // Agregar clase active al item clickeado
+                this.classList.add('active');
+                
+                // Actualizar el contenido principal
+                const title = this.textContent.trim();
+                document.querySelector('.content-header').textContent = title;
+                
+                // Cambiar el texto del contenido según la sección
+                const contentText = document.querySelector('.content-text');
+                switch(title) {
+                    case 'Dashboard':
+                        contentText.innerHTML = 'Bienvenido al panel de control. Aquí puedes gestionar todos los aspectos de tu sistema educativo.';
+                        break;
+                    case 'Batch':
+                        contentText.innerHTML = 'Gestiona los lotes y grupos de estudiantes. Organiza y administra las diferentes cohortes.';
+                        break;
+                    case 'Students':
+                        contentText.innerHTML = 'Administra la información de los estudiantes. Registra, edita y consulta datos académicos.';
+                        break;
+                    case 'Employees':
+                        contentText.innerHTML = 'Gestiona el personal y empleados del sistema. Controla roles y permisos.';
+                        break;
+                    case 'Tests':
+                        contentText.innerHTML = 'Crea, edita y administra exámenes y evaluaciones para los estudiantes.';
+                        break;
+                    case 'Settings':
+                        contentText.innerHTML = 'Configura los parámetros del sistema. Ajusta preferencias y configuraciones generales.';
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
